@@ -3,6 +3,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * =====================================================================================
@@ -13,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * =====================================================================================
  */
 @Controller
-@RequestMapping("/hello")
+@RequestMapping("/welcome")
 public class HelloController {
 
     @RequestMapping(method = RequestMethod.GET)
-    public String helloWorld(ModelMap model) {
-        model.addAttribute("message", "Hello Spring MVC Framework!");
-        return "hello";
+    public ModelAndView helloWorld() {
+        String message = "This is the hello world";
+        return new ModelAndView("hello", "message", message);
     }
 }
