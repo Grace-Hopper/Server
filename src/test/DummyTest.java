@@ -13,6 +13,6 @@ public class DummyTest {
     @Test
     public void sum() throws Exception {
         Dummy dm = new Dummy();
-        assertEquals(8, dm.sum(2,5));
+        assertEquals(7, dm.sum(2,5));
     }
 }
