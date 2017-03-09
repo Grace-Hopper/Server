@@ -4,4 +4,4 @@ script: mvn clean verify
 jdk:
  - openjdk8
 script:
-mvn verify
+ - mvn verify
