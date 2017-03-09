@@ -71,6 +71,8 @@
 	</dependencies>
 	<build>
 		<finalName>ReceticasWebApp</finalName>
+		<!--Tests-->
+		<testSourceDirectory>${project.basedir}/src/test</testSourceDirectory>
 
 		<plugins>
 			<plugin>
