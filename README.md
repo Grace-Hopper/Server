@@ -14,3 +14,9 @@ If you are using an IDE just import maven project and search for *pom.xml*
 ```zsh
 $ ./run.sh
 ```
+## Test with curl
+```zsh
+$ curl -H "Content-Type: application/json" -i http://localhost:8080/api/user --data '{"username":"xyz"}'
+$ curl -H "Content-Type: application/json" -i http://localhost:8080/api/recepies
+$ curl -H "Content-Type: application/json" -i http://localhost:8080/api/recepie\?id\=78
+```
