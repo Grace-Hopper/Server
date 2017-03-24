@@ -11,19 +11,31 @@ import javax.persistence.*;
  * =====================================================================================
  */
 
-@Entity
+@Entity(name = "recipes")
+@Table(name = "recipes")
 public class Recipe {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
-    @Column
+    private long id;
+
+    @Column(name = "name")
     private String name;
 
-    public int getId() {
+    @Column(name = "total_name")
+    private int total_time;
+
+    @ManyToOne
+    @JoinColumn(name = "user")
+    private User user;
+
+//TODO: constructor and move to models
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -33,5 +45,21 @@ public class Recipe {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getTotal_time() {
+        return total_time;
+    }
+
+    public void setTotal_time(int total_time) {
+        this.total_time = total_time;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

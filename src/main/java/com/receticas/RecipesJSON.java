@@ -26,8 +26,13 @@ public class RecipesJSON {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRecepies() {
         RecipeDAO dao = new RecipeDAO();
-        List<Recipe> recepies = dao.getRecipes();
+        List<Recipe> recipes = dao.getRecipes();
 
-        return Response.status(200).entity(recepies).build();
+        System.out.println("******");
+        System.out.println(recipes.get(0));
+        System.out.println("******");
+        if(recipes.size() == 0) return Response.status(404).entity("[]").build();
+
+        return Response.status(200).entity(recipes).build();
     }
 }

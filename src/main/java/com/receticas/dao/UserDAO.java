@@ -43,7 +43,7 @@ public class UserDAO {
         return usersList;
     }
 
-    public int deleteUser(int id) {
+    public int deleteUser(long id) {
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         String hql = "DELETE FROM users WHERE id = :id";
@@ -57,7 +57,7 @@ public class UserDAO {
         return rowCount;
     }
 
-    public int updateUser(int id, User rp){
+    public int updateUser(long id, User rp){
         if(id <=0) return 0;
 
         Session session = SessionUtil.getSession();
@@ -73,5 +73,25 @@ public class UserDAO {
         session.close();
 
         return rowCount;
+    }
+
+    public User getUser(long id) {
+        Session session = SessionUtil.getSession();
+        Transaction tx = session.beginTransaction();
+        User user = session.get(User.class, id);
+        tx.commit();
+        session.close();
+
+        return user;
+    }
+
+    public User getUser(String name) {
+        Session session = SessionUtil.getSession();
+        Transaction tx = session.beginTransaction();
+        User user = session.get(User.class, name);
+        tx.commit();
+        session.close();
+
+        return user;
     }
 }

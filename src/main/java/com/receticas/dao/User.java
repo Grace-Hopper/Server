@@ -10,21 +10,27 @@ import javax.persistence.*;
  * Author: JORGE CHATO (651348)
  * =====================================================================================
  */
-@Entity
+@Entity(name = "users")
+@Table(name = "users")
 public class User {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
-    @Column
+    private long id;
+
+    @Column(name = "name")
     private String name;
-    @Column
+
+    @Column(name = "password")
     private String password;
 
-    public int getId() {
+//TODO: constructor and move to models
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

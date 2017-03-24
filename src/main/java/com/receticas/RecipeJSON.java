@@ -23,13 +23,12 @@ public class RecipeJSON {
      * @return String that will be returned as a application/json response.
      */
     @GET
-    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getRecepie(@QueryParam("id") int id) {
+    public Response getRecepie(@QueryParam("id") long id) {
         RecipeDAO dao = new RecipeDAO();
         Recipe recipe = dao.getRecipe(id);
 
-        if(recipe == null) return Response.status(Response.Status.NOT_FOUND).build();
+        if(recipe == null) return Response.status(Response.Status.NOT_FOUND).entity("{}").build();
 
         return Response.status(200).entity(recipe).build();
     }

@@ -38,7 +38,7 @@ public class UserJSONTest extends JerseyTest{
 
         Entity<User> userEntity = Entity.entity(user, MediaType.APPLICATION_JSON);
 
-        Response response = target().path("api/user").request().post(userEntity);
+        Response response = target().path("api/user/signup").request().post(userEntity);
 
         assertEquals("Should return status 200", 200, response.getStatus());
         assertNotNull("Should return notification", response.getEntity());

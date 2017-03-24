@@ -34,26 +34,28 @@ public class RecipeDAO {
 
     public List<Recipe> getRecipes(){
         Session session = SessionUtil.getSession();
-        String hql = "FROM recepies";
+        String hql = "FROM recipes";
         Query query = session.createQuery(hql);
-        List<Recipe> recipesList =  query.list();
+        List<Recipe> recipesList = query.list();
         session.close();
 
         return recipesList;
     }
 
-    public Recipe getRecipe(int id){
+    public Recipe getRecipe(long id){
         Session session = SessionUtil.getSession();
+        Transaction tx = session.beginTransaction();
         Recipe recipe = session.get(Recipe.class, id);
+        tx.commit();
         session.close();
 
         return recipe;
     }
 
-    public int deleteRecipe(int id) {
+    public int deleteRecipe(long id) {
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
-        String hql = "DELETE FROM recepies WHERE id = :id";
+        String hql = "DELETE FROM recipes WHERE id = :id";
         Query query = session.createQuery(hql);
         query.setParameter("id",id);
         int rowCount = query.executeUpdate();
@@ -64,15 +66,17 @@ public class RecipeDAO {
         return rowCount;
     }
 
-    public int updateRecipe(int id, Recipe rp){
+    public int updateRecipe(long id, Recipe rp){
         if(id <=0) return 0;
 
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
-        String hql = "UPDATE recepies SET name = :name WHERE id = :id";
+        String hql = "UPDATE recipes SET name = :name, total_time = :total_time, user = :user WHERE id = :id";
         Query query = session.createQuery(hql);
         query.setParameter("id",id);
         query.setParameter("name",rp.getName());
+        query.setParameter("total_time",rp.getTotal_time());
+        query.setParameter("user",rp.getUser().getId());
         int rowCount = query.executeUpdate();
         System.out.println("Rows affected: " + rowCount);
         tx.commit();
