@@ -1,5 +1,5 @@
-create database if not exists Software;
-use Software;
+create database if not exists software;
+use software;
 create table users (
 	id BIGINT (6),
 	name VARCHAR (32),
