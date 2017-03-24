@@ -1,4 +1,4 @@
-# Server [![Build Status](https://travis-ci.org/Grace-Hopper/Server.svg?branch=master)](https://travis-ci.org/Grace-Hopper/Server)
+# Server [![Build Status](https://travis-ci.org/UNIZAR-30226-2017-01/Server.svg?branch=master)](https://travis-ci.org/UNIZAR-30226-2017-01/Server)
 ## Required
 + openjdk8 or oraclejdk8
 + Apache Maven 3.3.9
@@ -13,4 +13,10 @@ If you are using an IDE just import maven project and search for *pom.xml*
 ## Run
 ```zsh
 $ ./run.sh
+```
+## Test with curl
+```zsh
+$ curl -H "Content-Type: application/json" -i http://localhost:8080/api/user --data '{"name":"test","password":"test"}' # POST user named test and pass test
+$ curl -H "Content-Type: application/json" -i http://localhost:8080/api/recipes # GET all recepies
+$ curl -H "Content-Type: application/json" -i http://localhost:8080/api/recipe\?id\=78 # GET the recipe with id = 78
 ```
