@@ -5,12 +5,13 @@
     <session-factory name="hibernateSessionFactory">
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.password">Ps0ftwar3#</property>
-        <property name="hibernate.connection.url">jdbc:mysql://:3306/prsoft</property>
+        <property name="hibernate.connection.url">jdbc:mysql://aularium.es:3306/prsoft</property>
         <property name="hibernate.connection.username">prsoft</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
         <!--   <property name="hibernate.hbm2ddl.auto">create</property> -->
-        <mapping class="com.topjavatutorial.dao.Employee"/>
+        <mapping class="com.receticas.dao.Recipe"/>
+        <mapping class="com.receticas.dao.User"/>
     </session-factory>
 </hibernate-configuration>

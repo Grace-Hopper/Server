@@ -1,7 +1,7 @@
 package com.receticas;
 
-import com.receticas.dao.Recepie;
-import com.receticas.dao.RecepieDAO;
+import com.receticas.dao.Recipe;
+import com.receticas.dao.RecipeDAO;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -13,8 +13,8 @@ import java.util.List;
 /**
  * Root resource (exposed at "api/recepies" path)
  */
-@Path("api/recepies")
-public class RecepiesJSON {
+@Path("api/recipes")
+public class RecipesJSON {
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent
@@ -23,11 +23,10 @@ public class RecepiesJSON {
      * @return list of recepies that will be returned as a application/json response.
      */
     @GET
-    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRecepies() {
-        RecepieDAO dao = new RecepieDAO();
-        List<Recepie> recepies = dao.getRecepies();
+        RecipeDAO dao = new RecipeDAO();
+        List<Recipe> recepies = dao.getRecipes();
 
         return Response.status(200).entity(recepies).build();
     }

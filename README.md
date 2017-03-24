@@ -16,7 +16,7 @@ $ ./run.sh
 ```
 ## Test with curl
 ```zsh
-$ curl -H "Content-Type: application/json" -i http://localhost:8080/api/user --data '{"username":"xyz"}'
-$ curl -H "Content-Type: application/json" -i http://localhost:8080/api/recepies
-$ curl -H "Content-Type: application/json" -i http://localhost:8080/api/recepie\?id\=78
+$ curl -H "Content-Type: application/json" -i http://localhost:8080/api/user --data '{"name":"test","password":"test"}' # POST user named test and pass test
+$ curl -H "Content-Type: application/json" -i http://localhost:8080/api/recipes # GET all recepies
+$ curl -H "Content-Type: application/json" -i http://localhost:8080/api/recipe\?id\=78 # GET the recipe with id = 78
 ```

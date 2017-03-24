@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 /**
  * =====================================================================================
- * Filename: Recepie.java
+ * Filename: Recipe.java
  * Version: 1.0
  * Created: 3/24/17
  * Author: JORGE CHATO (651348)
@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 
 @Entity
-public class Recepie {
+public class Recipe {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;

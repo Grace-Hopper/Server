@@ -8,41 +8,49 @@ import java.util.List;
 
 /**
  * =====================================================================================
- * Filename: RecepieDAO.java
+ * Filename: RecipeDAO.java
  * Version: 1.0
  * Created: 3/24/17
  * Author: JORGE CHATO (651348)
  * =====================================================================================
  */
-public class RecepieDAO {
+public class RecipeDAO {
 
-    public void addRecepie(Recepie bean){
+    public void addRecipe(Recipe bean){
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
-        addRecepie(session,bean);
+        addRecipe(session,bean);
         tx.commit();
         session.close();
     }
 
-    private void addRecepie(Session session, Recepie bean){
-        Recepie recepie= new Recepie();
+    private void addRecipe(Session session, Recipe bean){
+        Recipe recipe = new Recipe();
 
-        recepie.setName(bean.getName());
+        recipe.setName(bean.getName());
 
-        session.save(recepie);
+        session.save(recipe);
     }
 
-    public List<Recepie> getRecepies(){
+    public List<Recipe> getRecipes(){
         Session session = SessionUtil.getSession();
         String hql = "FROM recepies";
         Query query = session.createQuery(hql);
-        List<Recepie> recepiesList =  query.list();
+        List<Recipe> recipesList =  query.list();
         session.close();
 
-        return recepiesList;
+        return recipesList;
     }
 
-    public int deleteRecepie(int id) {
+    public Recipe getRecipe(int id){
+        Session session = SessionUtil.getSession();
+        Recipe recipe = session.get(Recipe.class, id);
+        session.close();
+
+        return recipe;
+    }
+
+    public int deleteRecipe(int id) {
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
         String hql = "DELETE FROM recepies WHERE id = :id";
@@ -56,7 +64,7 @@ public class RecepieDAO {
         return rowCount;
     }
 
-    public int updateRecepie(int id, Recepie rp){
+    public int updateRecipe(int id, Recipe rp){
         if(id <=0) return 0;
 
         Session session = SessionUtil.getSession();
