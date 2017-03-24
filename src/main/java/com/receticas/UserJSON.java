@@ -1,13 +1,10 @@
 package com.receticas;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
+import com.receticas.dao.User;
+import com.receticas.dao.UserDAO;
+
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 /**
@@ -23,12 +20,11 @@ public class UserJSON {
      * @return String that will be returned as a application/json response.
      */
     @POST
-		@Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-		@Consumes(MediaType.APPLICATION_JSON)
-    public Response storeUser(String o) {
-				//TODO: Change String to user object
-				//TODO: Conect with db, post the user and return a json of the user created
-        return Response.status(200).entity(o).build();
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response storeUser(User user) {
+//        UserDAO dao = new UserDAO();
+//        dao.addUser(user);
+        return Response.status(200).entity(user).build();
     }
 }

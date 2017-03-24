@@ -1,12 +1,14 @@
 package com.receticas;
 
+import com.receticas.dao.Recepie;
+import com.receticas.dao.RecepieDAO;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * Root resource (exposed at "api/recepies" path)
@@ -21,11 +23,12 @@ public class RecepiesJSON {
      * @return list of recepies that will be returned as a application/json response.
      */
     @GET
-		@Path("/")
+    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRecepies() {
-				//TODO: Conect with db and return a json of all recepies
-				Object o = null;
-        return Response.status(200).entity(o).build();
+        RecepieDAO dao = new RecepieDAO();
+        List<Recepie> recepies = dao.getRecepies();
+
+        return Response.status(200).entity(recepies).build();
     }
 }
