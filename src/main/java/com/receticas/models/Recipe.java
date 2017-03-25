@@ -1,4 +1,4 @@
-package com.receticas.dao;
+package com.receticas.models;
 
 import javax.persistence.*;
 
@@ -29,7 +29,11 @@ public class Recipe {
     @JoinColumn(name = "user")
     private User user;
 
-//TODO: constructor and move to models
+    public Recipe(String name, int total_time, User user) {
+        this.name = name;
+        this.total_time = total_time;
+        this.user = user;
+    }
 
     public long getId() {
         return id;

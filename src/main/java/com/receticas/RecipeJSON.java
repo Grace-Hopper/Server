@@ -1,13 +1,10 @@
 package com.receticas;
 
-import com.receticas.dao.Recipe;
+import com.receticas.models.Recipe;
 import com.receticas.dao.RecipeDAO;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 /**
@@ -24,11 +21,14 @@ public class RecipeJSON {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getRecepie(@QueryParam("id") long id) {
+    public Response getRecepie(@QueryParam("id") long id, @HeaderParam("Authorization") String token) {
         RecipeDAO dao = new RecipeDAO();
         Recipe recipe = dao.getRecipe(id);
 
-        if(recipe == null) return Response.status(Response.Status.NOT_FOUND).entity("{}").build();
+        if(recipe == null)
+            return Response.status(404).entity("{}").build();
+        if(new UserJSON().getUser(token) == null)
+            return Response.status(401).entity("{}").build();
 
         return Response.status(200).entity(recipe).build();
     }

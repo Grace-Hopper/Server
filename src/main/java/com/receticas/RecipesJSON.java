@@ -1,9 +1,10 @@
 package com.receticas;
 
-import com.receticas.dao.Recipe;
+import com.receticas.models.Recipe;
 import com.receticas.dao.RecipeDAO;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -24,14 +25,14 @@ public class RecipesJSON {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getRecepies() {
+    public Response getRecepies(@HeaderParam("Authorization") String token) {
         RecipeDAO dao = new RecipeDAO();
         List<Recipe> recipes = dao.getRecipes();
 
-        System.out.println("******");
-        System.out.println(recipes.get(0));
-        System.out.println("******");
-        if(recipes.size() == 0) return Response.status(404).entity("[]").build();
+        if(recipes.size() == 0)
+            return Response.status(404).entity("[]").build();
+        if(new UserJSON().getUser(token) == null)
+            return Response.status(401).entity("[]").build();
 
         return Response.status(200).entity(recipes).build();
     }

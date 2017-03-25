@@ -1,5 +1,6 @@
 package com.receticas.dao;
 
+import com.receticas.models.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -25,10 +26,7 @@ public class UserDAO {
     }
 
     private void addUser(Session session, User bean){
-        User user= new User();
-
-        user.setName(bean.getName());
-        user.setPassword(bean.getPassword());
+        User user= new User(bean.getName(), bean.getPassword());
 
         session.save(user);
     }
@@ -43,12 +41,12 @@ public class UserDAO {
         return usersList;
     }
 
-    public int deleteUser(long id) {
+    public int deleteUser(String token) {
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
-        String hql = "DELETE FROM users WHERE id = :id";
+        String hql = "DELETE FROM users WHERE token = :token";
         Query query = session.createQuery(hql);
-        query.setParameter("id",id);
+        query.setParameter("token",token);
         int rowCount = query.executeUpdate();
         System.out.println("Rows affected: " + rowCount);
         tx.commit();
@@ -62,11 +60,11 @@ public class UserDAO {
 
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
-        String hql = "UPDATE users SET name = :name, password = :password WHERE id = :id";
+        String hql = "UPDATE users SET name = :name, password = :password WHERE token = :token";
         Query query = session.createQuery(hql);
-        query.setParameter("id",id);
-        query.setParameter("name",rp.getName());
-        query.setParameter("password",rp.getPassword());
+        query.setParameter("token", rp.getToken());
+        query.setParameter("name", rp.getName());
+        query.setParameter("password", rp.getPassword());
         int rowCount = query.executeUpdate();
         System.out.println("Rows affected: " + rowCount);
         tx.commit();
@@ -75,20 +73,10 @@ public class UserDAO {
         return rowCount;
     }
 
-    public User getUser(long id) {
+    public User getUser(String token) {
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
-        User user = session.get(User.class, id);
-        tx.commit();
-        session.close();
-
-        return user;
-    }
-
-    public User getUser(String name) {
-        Session session = SessionUtil.getSession();
-        Transaction tx = session.beginTransaction();
-        User user = session.get(User.class, name);
+        User user = session.get(User.class, token);
         tx.commit();
         session.close();
 

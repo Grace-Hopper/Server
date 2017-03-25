@@ -1,5 +1,6 @@
 package com.receticas.dao;
 
+import com.receticas.models.Recipe;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -25,9 +26,7 @@ public class RecipeDAO {
     }
 
     private void addRecipe(Session session, Recipe bean){
-        Recipe recipe = new Recipe();
-
-        recipe.setName(bean.getName());
+        Recipe recipe = new Recipe(bean.getName(), bean.getTotal_time(), bean.getUser());
 
         session.save(recipe);
     }

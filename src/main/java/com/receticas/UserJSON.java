@@ -1,6 +1,6 @@
 package com.receticas;
 
-import com.receticas.dao.User;
+import com.receticas.models.User;
 import com.receticas.dao.UserDAO;
 
 import javax.ws.rs.*;
@@ -21,9 +21,9 @@ public class UserJSON {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUser(@QueryParam("id") long id) {
+    public Response getUser(@HeaderParam("Authorization") String token) {
         UserDAO dao = new UserDAO();
-        User user = dao.getUser(id);
+        User user = dao.getUser(token);
 
         if(user == null) return Response.status(404).entity("{}").build();
 

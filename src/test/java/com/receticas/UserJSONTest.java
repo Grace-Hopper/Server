@@ -1,6 +1,6 @@
 package com.receticas;
 
-import com.receticas.dao.User;
+import com.receticas.models.User;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Test;
@@ -32,9 +32,7 @@ public class UserJSONTest extends JerseyTest{
      */
     @Test
     public void testGetIt() {
-        User user = new User();
-        user.setName("test");
-        user.setPassword("test");
+        User user = new User("test", "test");
 
         Entity<User> userEntity = Entity.entity(user, MediaType.APPLICATION_JSON);
 
