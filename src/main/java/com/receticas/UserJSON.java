@@ -21,9 +21,9 @@ public class UserJSON {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUser(@HeaderParam("Authorization") String token) {
+    public Response getUser(@HeaderParam("Authorization") String name) {
         UserDAO dao = new UserDAO();
-        User user = dao.getUser(token);
+        User user = dao.getUser(name);
 
         if(user == null) return Response.status(404).entity("{}").build();
 
@@ -41,9 +41,14 @@ public class UserJSON {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response storeUser(User user) {
         UserDAO dao = new UserDAO();
-        dao.addUser(user);
+        User exist = dao.getUser(user.getName());
 
-        return Response.status(200).entity(user).build();
+        if(exist == null) {
+            dao.addUser(user);
+            return Response.status(200).entity(user).build();
+        }
+
+        return Response.status(422).entity("{}").build();
     }
     /**
      * Method handling HTTP POST requests. The returned object will be sent

@@ -26,7 +26,9 @@ public class UserDAO {
     }
 
     private void addUser(Session session, User bean){
-        User user= new User(bean.getName(), bean.getPassword());
+        User user= new User();
+        user.setName(bean.getName());
+        user.setPassword(bean.getPassword());
 
         session.save(user);
     }
@@ -41,12 +43,12 @@ public class UserDAO {
         return usersList;
     }
 
-    public int deleteUser(String token) {
+    public int deleteUser(String name) {
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
-        String hql = "DELETE FROM users WHERE token = :token";
+        String hql = "DELETE FROM users WHERE  name = :name";
         Query query = session.createQuery(hql);
-        query.setParameter("token",token);
+        query.setParameter("name", name);
         int rowCount = query.executeUpdate();
         System.out.println("Rows affected: " + rowCount);
         tx.commit();
@@ -60,9 +62,8 @@ public class UserDAO {
 
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
-        String hql = "UPDATE users SET name = :name, password = :password WHERE token = :token";
+        String hql = "UPDATE users SET password = :password WHERE name = :name";
         Query query = session.createQuery(hql);
-        query.setParameter("token", rp.getToken());
         query.setParameter("name", rp.getName());
         query.setParameter("password", rp.getPassword());
         int rowCount = query.executeUpdate();
@@ -73,11 +74,12 @@ public class UserDAO {
         return rowCount;
     }
 
-    public User getUser(String token) {
+    public User getUser(String name) {
         Session session = SessionUtil.getSession();
-        Transaction tx = session.beginTransaction();
-        User user = session.get(User.class, token);
-        tx.commit();
+        String hql = "FROM users WHERE name = :name";
+        Query query = session.createQuery(hql);
+        query.setParameter("name", name);
+        User user = (User) query.uniqueResult();
         session.close();
 
         return user;

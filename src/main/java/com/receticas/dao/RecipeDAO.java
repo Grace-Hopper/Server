@@ -26,7 +26,10 @@ public class RecipeDAO {
     }
 
     private void addRecipe(Session session, Recipe bean){
-        Recipe recipe = new Recipe(bean.getName(), bean.getTotal_time(), bean.getUser());
+        Recipe recipe = new Recipe();
+        recipe.setName(bean.getName());
+        recipe.setTotal_time(bean.getTotal_time());
+        recipe.setUser(bean.getUser());
 
         session.save(recipe);
     }

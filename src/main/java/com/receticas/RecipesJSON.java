@@ -1,12 +1,15 @@
 package com.receticas;
 
+import com.receticas.dao.UserDAO;
 import com.receticas.models.Recipe;
 import com.receticas.dao.RecipeDAO;
+import com.receticas.models.User;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -25,15 +28,20 @@ public class RecipesJSON {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getRecepies(@HeaderParam("Authorization") String token) {
+    public Response getRecepies(@HeaderParam("Authorization") String name) {
         RecipeDAO dao = new RecipeDAO();
         List<Recipe> recipes = dao.getRecipes();
+        UserDAO udao = new UserDAO();
+        User user = udao.getUser(name);
 
         if(recipes.size() == 0)
             return Response.status(404).entity("[]").build();
-        if(new UserJSON().getUser(token) == null)
+//        We can remove this condition if we serve our info even users are not logged in
+        if(user == null)
             return Response.status(401).entity("[]").build();
 
-        return Response.status(200).entity(recipes).build();
+        GenericEntity<List<Recipe>> entity = new GenericEntity<List<Recipe>>(recipes) {};
+
+        return Response.status(200).entity(entity).build();
     }
 }

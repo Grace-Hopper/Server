@@ -1,6 +1,7 @@
 package com.receticas.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * =====================================================================================
@@ -13,7 +14,7 @@ import javax.persistence.*;
 
 @Entity(name = "recipes")
 @Table(name = "recipes")
-public class Recipe {
+public class Recipe implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -28,12 +29,6 @@ public class Recipe {
     @ManyToOne
     @JoinColumn(name = "user")
     private User user;
-
-    public Recipe(String name, int total_time, User user) {
-        this.name = name;
-        this.total_time = total_time;
-        this.user = user;
-    }
 
     public long getId() {
         return id;

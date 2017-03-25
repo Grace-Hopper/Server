@@ -10,6 +10,8 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import java.util.UUID;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -32,7 +34,11 @@ public class UserJSONTest extends JerseyTest{
      */
     @Test
     public void testGetIt() {
-        User user = new User("test", "test");
+        String aux = UUID.randomUUID().toString().toUpperCase();
+
+        User user = new User();
+        user.setName(aux);
+        user.setPassword(aux);
 
         Entity<User> userEntity = Entity.entity(user, MediaType.APPLICATION_JSON);
 

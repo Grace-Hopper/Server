@@ -1,7 +1,7 @@
 package com.receticas.models;
 
 import javax.persistence.*;
-import java.util.UUID;
+import java.io.Serializable;
 
 /**
  * =====================================================================================
@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 @Entity(name = "users")
 @Table(name = "users")
-public class User {
+public class User implements Serializable{
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -24,25 +24,6 @@ public class User {
 
     @Column(name = "password")
     private String password;
-
-    @ManyToOne
-    @JoinColumn(name = "token")
-    private  String token;
-
-    public User(String name, String password, String token) {
-        this.name = name;
-        this.password = password;
-        this.token = token;
-    }
-
-    public User(String name, String password) {
-        this(name, password, "");
-        this.token = generateToken();
-    }
-
-    public String generateToken(){
-        return UUID.randomUUID().toString().toUpperCase();
-    }
 
     public long getId() {
         return id;
@@ -66,13 +47,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 }
