@@ -52,7 +52,7 @@ public class Recipe implements Serializable {
         this.name = name;
     }
 
-    public int getTotal_time() {
+    public long getTotal_time() {
         return total_time;
     }
 
