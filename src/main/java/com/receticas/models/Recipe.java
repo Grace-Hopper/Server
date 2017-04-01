@@ -23,8 +23,14 @@ public class Recipe implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "total_name")
-    private int total_time;
+    @Column(name = "total_time")
+    private long total_time;
+
+    @Column(name = "person")
+    private long person;
+
+    @Column(name = "picture")
+    private byte[] picture;
 
     @ManyToOne
     @JoinColumn(name = "user")
@@ -52,6 +58,22 @@ public class Recipe implements Serializable {
 
     public void setTotal_time(int total_time) {
         this.total_time = total_time;
+    }
+
+    public long getPerson() {
+        return person;
+    }
+
+    public void setPerson(long person) {
+        this.person = person;
+    }
+
+    public byte[] getPicture() {
+        return picture;
+    }
+
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
     }
 
     public User getUser() {
