@@ -56,7 +56,7 @@ public class Recipe implements Serializable {
         return total_time;
     }
 
-    public void setTotal_time(int total_time) {
+    public void setTotal_time(long total_time) {
         this.total_time = total_time;
     }
 
