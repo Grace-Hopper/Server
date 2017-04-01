@@ -1,5 +1,15 @@
 create database if not exists prsoft;
 use prsoft;
+drop table if exists use_4;
+drop table if exists use_3;
+drop table if exists steps;
+drop table if exists use_2;
+drop table if exists use_1;
+drop table if exists ingredients;
+drop table if exists utensils;
+drop table if exists recipes;
+drop table if exists users;
+
 create table users (
 	id BIGINT (6) auto_increment ,
 	name VARCHAR (32) unique not null,
@@ -13,6 +23,7 @@ create table recipes (
 	total_time BIGINT (6) not null,
 	person BIGINT (6) not null,
 	user BIGINT (6),
+	picture LONGBLOB,
 	PRIMARY KEY (id),
 	FOREIGN KEY (user) references users(id)
 );
