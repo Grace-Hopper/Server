@@ -29,7 +29,7 @@ public class Recipe implements Serializable {
     @Column(name = "person")
     private long person;
 
-    @Column(name = "picture")
+    @Column(columnDefinition = "LONGBLOB", name = "picture")
     private byte[] picture;
 
     @ManyToOne
