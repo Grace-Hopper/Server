@@ -15,11 +15,6 @@ public class Utensil implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy="utensils", cascade=CascadeType.ALL)
-    @JoinTable(name="use_1", joinColumns={@JoinColumn(name ="utensil", referencedColumnName ="id")},
-    inverseJoinColumns={@JoinColumn(name ="recipe", referencedColumnName ="id")})
-    private List<Recipe> recipes = new ArrayList();
-
     public long getId() {
         return id;
     }
@@ -34,10 +29,6 @@ public class Utensil implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Recipe> getRecipes() {
-        return recipes;
     }
 
 }
