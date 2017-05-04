@@ -2,6 +2,7 @@ package com.receticas.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.*;
 
 /**
  * =====================================================================================
@@ -35,6 +36,11 @@ public class Recipe implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user")
     private User user;
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="use_1", joinColumns={@JoinColumn(name ="recipe", referencedColumnName ="id")},
+    inverseJoinColumns={@JoinColumn(name ="utensil", referencedColumnName ="id")})
+	private List<Utensil> utensils = new ArrayList();    
 
     public long getId() {
         return id;
@@ -82,5 +88,9 @@ public class Recipe implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Utensil> getUtensils() {
+    	return utensils;
     }
 }
