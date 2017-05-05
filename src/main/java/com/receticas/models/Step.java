@@ -30,6 +30,9 @@ public class Step implements Serializable {
                                             referencedColumnName = "id"))
     private List<Utensil> utensils = new ArrayList();
 
+    @OneToMany(cascade=CascadeType.ALL)    
+    private List<IngreStep> steps = new ArrayList();
+
     public PkStep getStep() {
         return id;
     }
@@ -56,6 +59,10 @@ public class Step implements Serializable {
 
     public List<Utensil> getUtensils() {
         return utensils;
+    }
+
+    public List<IngreStep> getIngreSteps() {
+        return steps;
     }
 
 }

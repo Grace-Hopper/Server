@@ -40,7 +40,10 @@ public class Recipe implements Serializable {
     @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name="use_1", joinColumns={@JoinColumn(name ="recipe", referencedColumnName ="id")},
     inverseJoinColumns={@JoinColumn(name ="utensil", referencedColumnName ="id")})
-	private List<Utensil> utensils = new ArrayList();    
+	private List<Utensil> utensils = new ArrayList();
+
+    @OneToMany(cascade=CascadeType.ALL)    
+    private List<IngreRecipe> ingredients = new ArrayList();
 
     public long getId() {
         return id;
@@ -93,4 +96,9 @@ public class Recipe implements Serializable {
     public List<Utensil> getUtensils() {
     	return utensils;
     }
+
+    public List<IngreRecipe> getIngredients() {
+        return ingredients;
+    }
+
 }
