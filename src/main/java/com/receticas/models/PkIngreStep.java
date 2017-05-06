@@ -8,9 +8,13 @@ import java.util.*;
 public class PkIngreStep implements Serializable {
  
     @ManyToOne
-    @JoinColumns({
+    @PrimaryKeyJoinColumns(value = {
+    @PrimaryKeyJoinColumn(name = "step", referencedColumnName = "step"),
+    @PrimaryKeyJoinColumn(name = "recipe", referencedColumnName = "recipe1")
+})
+    /*@JoinColumns({
             @JoinColumn(name = "step", referencedColumnName = "step"),
-            @JoinColumn(name = "recipe", referencedColumnName = "recipe")})
+            @JoinColumn(name = "recipe", referencedColumnName = "recipe")})*/
     private Step step;
 
     @ManyToOne
