@@ -37,4 +37,39 @@ public class RecipeJSON {
 
         return Response.status(200).entity(recipe).build();
     }
+    /**
+     * Method handling HTTP PUT requests. The returned object will be sent
+     * to the client as "application/json" media type.
+     *
+     * @return String that will be returned as a application/json response.
+     */
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response upgradeRecipe(Recipe rp) {
+        RecipeDAO dao = new RecipeDAO();
+        Recipe exist = dao.getRecipe(rp.getId());
+
+        if(exist != null) {
+            dao.updateRecipe(rp.getId(), rp);
+            return Response.status(200).entity(rp).build();
+        }
+
+        return Response.status(404).entity("{}").build();
+    }
+    /**
+     * Method handling HTTP POST requests. The returned object will be sent
+     * to the client as "application/json" media type.
+     *
+     * @return String that will be returned as a application/json response.
+     */
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response storeRecipe(Recipe rp) {
+        RecipeDAO dao = new RecipeDAO();
+
+        dao.addRecipe(rp);
+        return Response.status(200).entity(rp).build();
+    }
 }
