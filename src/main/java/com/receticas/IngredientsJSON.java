@@ -52,4 +52,34 @@ public class IngredientsJSON {
 		return Response.status(200).entity(entity).build();
 	}
 
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getIngStep(@QueryParam("id") PkStep id, @HeaderParam("Authorization") String name) {
+		StepDAO dao = new StepDAO();
+		Step step = dao.getStep(id);
+		UserDAO udao = new UserDAO();
+		User user = udao.getUser(name);
+		if(step == null)
+			return Response.status(404).entity("{}").build();
+		if(user == null)
+			return Response.status(401).entity("{}").build();
+
+		List<IngreStep> ingredients = step.getIngreSteps();
+		List<IngreQuantity> ingQuan = new ArrayList();
+		for(IngreStep i : ingredients){
+			IngreQuantity aux= new IngreQuantity();
+			aux.setIngreName(i.getIngreStep().getIngredient().getName());
+			aux.setIngreQuant(i.getQuantity());
+			ingQuan.add(aux);
+		}
+
+		if(ingQuan.size() == 0){
+			return Response.status(422).entity("{}").build();
+		}
+		
+		GenericEntity<List<IngreQuantity>> entity = new GenericEntity<List<IngreQuantity>>(ingQuan) {};
+
+		return Response.status(200).entity(entity).build();
+	}
+
 }
