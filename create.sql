@@ -23,6 +23,7 @@ create table recipes (
 	total_time BIGINT (6) not null,
 	person BIGINT (6) not null,
 	user BIGINT (6),
+	outstanding INT(1) not null default 0,
 	picture LONGBLOB,
 	PRIMARY KEY (id),
 	FOREIGN KEY (user) references users(id)
