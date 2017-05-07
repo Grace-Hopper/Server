@@ -12,8 +12,8 @@ drop table if exists users;
 
 create table users (
 	id BIGINT (6) auto_increment ,
-	name VARCHAR (32) unique not null,
-	password VARCHAR (32) not null,
+	name VARCHAR (50) unique not null,
+	password VARCHAR (50) not null,
 	PRIMARY KEY (id)
 );
 
