@@ -15,6 +15,9 @@ public class Ingredient implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @OneToMany(cascade=CascadeType.ALL)    
+    private List<IngreRecipe> recipes = new ArrayList();
+
     public long getId() {
         return id;
     }
@@ -29,6 +32,10 @@ public class Ingredient implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<IngreRecipe> getRecipes() {
+        return recipes;
     }
 
 }
