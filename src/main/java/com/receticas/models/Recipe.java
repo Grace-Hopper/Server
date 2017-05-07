@@ -30,6 +30,9 @@ public class Recipe implements Serializable {
     @Column(name = "person")
     private long person;
 
+    @Column(name = "outstanding")
+    private int outstanding;
+
     @Column(columnDefinition = "LONGBLOB", name = "picture")
     private byte[] picture;
 
@@ -75,6 +78,14 @@ public class Recipe implements Serializable {
 
     public void setPerson(long person) {
         this.person = person;
+    }
+
+    public int getOutstanding() {
+        return outstanding;
+    }
+
+    public void setOutstanding(int outstanding) {
+        this.outstanding = outstanding;
     }
 
     public byte[] getPicture() {

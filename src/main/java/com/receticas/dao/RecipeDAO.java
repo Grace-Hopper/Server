@@ -73,12 +73,13 @@ public class RecipeDAO {
 
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
-        String hql = "UPDATE recipes SET name = :name, total_time = :total_time, person = :person, picture = :picture, user = :user WHERE id = :id";
+        String hql = "UPDATE recipes SET name = :name, total_time = :total_time, person = :person, outstanding = :outstanding, picture = :picture, user = :user WHERE id = :id";
         Query query = session.createQuery(hql);
         query.setParameter("id",id);
         query.setParameter("name",rp.getName());
         query.setParameter("total_time",rp.getTotal_time());
         query.setParameter("person",rp.getPerson());
+        query.setParameter("outstanding",rp.getOutstanding());
         query.setParameter("picture",rp.getPicture());
         query.setParameter("user",rp.getUser().getId());
         int rowCount = query.executeUpdate();
