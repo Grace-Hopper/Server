@@ -7,6 +7,8 @@ import com.receticas.models.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.GenericEntity;
+import java.util.*;
 
 @Path("api/recipe/step")
 
@@ -15,15 +17,19 @@ public class StepJSON{
 	@GET 
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getStep(@QueryParam("id") PkStep id, @HeaderParam("Authorization") String name ){
-		StepDAO dao = new StepDAO();
-		Step step = dao.getStep(id);
-		UserDAO udao = new UserDAO();
-		User user = udao.getUser(name);
-		if(step == null)
-			return Response.status(404).entity("{}").build();
-		if(user == null)
-			return Response.status(401).entity("{}").build();
+		RecipeDAO dao = new RecipeDAO();
+        List<Step> orderSteps = dao.getStepsRecipe(id.getRecipe().getId());
+        UserDAO udao = new UserDAO();
+        User user = udao.getUser(name);
 
-		return Response.status(200).entity(step).build();
+        if(orderSteps.size() == 0)
+            return Response.status(404).entity("{}").build();
+//        We can remove this condition if we serve our info even users are not logged in
+        if(user == null)
+            return Response.status(401).entity("{}").build();
+
+       	GenericEntity<List<Step>> entity = new GenericEntity<List<Step>>(orderSteps) {};
+
+		return Response.status(200).entity(entity).build();
 	}
 }

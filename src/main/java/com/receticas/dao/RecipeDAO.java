@@ -1,6 +1,7 @@
 package com.receticas.dao;
 
 import com.receticas.models.Recipe;
+import com.receticas.models.Step;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -42,6 +43,16 @@ public class RecipeDAO {
         session.close();
 
         return recipesList;
+    }
+
+    public List<Step> getStepsRecipe (long id){
+        Session session = SessionUtil.getSession();
+        String hql="Select * From steps Where recipe = :id Order by step";
+        Query query = session.createQuery(hql);
+        List<Step> orderStepList= query.list();
+        session.close();
+
+        return orderStepList;
     }
 
     public Recipe getRecipe(long id){
@@ -89,4 +100,6 @@ public class RecipeDAO {
 
         return rowCount;
     }
+
+
 }
