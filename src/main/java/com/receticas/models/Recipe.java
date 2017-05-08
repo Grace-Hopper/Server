@@ -119,4 +119,8 @@ public class Recipe implements Serializable {
         return steps;
     }
 
+    public List<Step> getStepsOrdenados(){
+    	return steps;
+    }
+
 }
