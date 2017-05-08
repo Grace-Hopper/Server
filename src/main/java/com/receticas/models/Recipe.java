@@ -48,6 +48,9 @@ public class Recipe implements Serializable {
     @OneToMany(cascade=CascadeType.ALL)    
     private List<IngreRecipe> ingredients = new ArrayList();
 
+    @OneToMany(cascade=CascadeType.ALL)    
+    private List<Step> steps = new ArrayList();
+
     public long getId() {
         return id;
     }
@@ -110,6 +113,10 @@ public class Recipe implements Serializable {
 
     public List<IngreRecipe> getIngredients() {
         return ingredients;
+    }
+
+    public List<Step> getSteps() {
+        return steps;
     }
 
 }
