@@ -65,6 +65,15 @@ public class RecipeDAO {
 
         return recipe;
     }
+    public List<Recipe> getDestacados(){
+        Session session = SessionUtil.getSession();
+        String hql = "FROM recipes where outstanding = 1";
+        Query query = session.createQuery(hql);
+        List<Recipe> recipesList = query.list();
+        session.close();
+
+        return recipesList;
+    }
 
     public int deleteRecipe(long id) {
         Session session = SessionUtil.getSession();
