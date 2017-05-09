@@ -16,9 +16,10 @@ public class StepJSON{
 
 	@GET 
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getStep(@QueryParam("id") PkStep id, @HeaderParam("Authorization") String name ){
+	public Response getStepp(@QueryParam("id") long id, @HeaderParam("Authorization") String name ){
 		RecipeDAO dao = new RecipeDAO();
-        List<Step> orderSteps = dao.getStepsRecipe(id.getRecipe().getId());
+        Recipe recipe = dao.getRecipe(id);
+        List<Step> orderSteps = dao.getStepsRecipe(recipe);
         UserDAO udao = new UserDAO();
         User user = udao.getUser(name);
 

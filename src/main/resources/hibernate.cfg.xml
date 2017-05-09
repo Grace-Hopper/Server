@@ -20,7 +20,5 @@
         <mapping class="com.receticas.models.Step"/>
         <mapping class="com.receticas.models.Utensil"/>
         <mapping class="com.receticas.models.Ingredient"/>
-        <mapping class="com.receticas.models.IngreRecipe"/>
-        <mapping class="com.receticas.models.IngreStep"/>
     </session-factory>
 </hibernate-configuration>

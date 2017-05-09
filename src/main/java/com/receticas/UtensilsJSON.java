@@ -17,10 +17,11 @@ import java.util.*;
 
 
 
-@Path("api/ingredients")
+@Path("api/recipe")
 public class UtensilsJSON {
 
 	@GET
+	@Path("utensils")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUtenRecipe(@QueryParam("id") long id, @HeaderParam("Authorization") String name) {
 		RecipeDAO dao = new RecipeDAO();
@@ -45,8 +46,9 @@ public class UtensilsJSON {
 	}
 
 	@GET
+	@Path("step/utensils")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getUtenStep(@QueryParam("id") PkStep id, @HeaderParam("Authorization") String name) {
+	public Response getUtenStep(@QueryParam("id") long id, @HeaderParam("Authorization") String name) {
 		StepDAO dao = new StepDAO();
 		Step step = dao.getStep(id);
 		UserDAO udao = new UserDAO();

@@ -7,8 +7,13 @@ import java.util.*;
 @Entity(name = "steps")
 @Table(name = "steps")
 public class Step implements Serializable {
-    @EmbeddedId
-    private PkStep id;
+    @Id
+    @Column(name = "step")
+    private long step;
+
+    @ManyToOne
+    @JoinColumn(name = "recipe")
+    private Recipe recipe;
 
     @Column(name = "time")
     private long timer;
@@ -26,19 +31,38 @@ public class Step implements Serializable {
                                       referencedColumnName = "recipe", 
                                       nullable = true)},
            inverseJoinColumns = @JoinColumn(table = "utensils",
-                                            name="utensil",
+                                            name = "utensil",
                                             referencedColumnName = "id"))
     private List<Utensil> utensils = new ArrayList();
 
-    @OneToMany(cascade=CascadeType.ALL)    
-    private List<IngreStep> steps = new ArrayList();
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name = "use_3",
+           joinColumns = {@JoinColumn(table = "steps",
+                                      name = "step", 
+                                      referencedColumnName = "step"),
+                          @JoinColumn(table = "steps",
+                                      name = "recipe",                               
+                                      referencedColumnName = "recipe", 
+                                      nullable = true)},
+           inverseJoinColumns = @JoinColumn(table = "ingredients",
+                                            name = "ingredient",
+                                            referencedColumnName = "id"))    
+    private List<Ingredient> ingredients = new ArrayList();
 
-    public PkStep getStep() {
-        return id;
+    public long getStep() {
+        return step;
+    }
+ 
+    public void setStep(long step) {
+        this.step = step;
     }
 
-    public void setStep(PkStep id) {
-        this.id = id;
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 
     public long getTime() {
@@ -61,8 +85,30 @@ public class Step implements Serializable {
         return utensils;
     }
 
-    public List<IngreStep> getIngreSteps() {
-        return steps;
+    public void setUtensils(List<Utensil> utensils){
+    	this.utensils = utensils;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients){
+    	this.ingredients = ingredients;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Step)) return false;
+        Step that = (Step) o;
+        return Objects.equals(getStep(), that.getStep()) &&
+                Objects.equals(getRecipe(), that.getRecipe());
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getStep(), getRecipe());
     }
 
 }

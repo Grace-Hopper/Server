@@ -17,10 +17,11 @@ import java.util.*;
 
 
 
-@Path("api/ingredients")
+@Path("api/recipe/inf")
 public class IngredientsJSON {
 
 	@GET
+	@Path("ingredients")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getIngRecipe(@QueryParam("id") long id, @HeaderParam("Authorization") String name) {
 		RecipeDAO dao = new RecipeDAO();
@@ -34,27 +35,21 @@ public class IngredientsJSON {
         if(user == null)
             return Response.status(401).entity("{}").build();
 
-		List<IngreRecipe> ingredients = recipe.getIngredients();
-		List<IngreQuantity> ingQuan = new ArrayList();
-		for(IngreRecipe i : ingredients){
-			IngreQuantity aux= new IngreQuantity();
-			aux.setIngreName(i.getIngreRecipe().getIngredient().getName());
-			aux.setIngreQuant(i.getQuantity());
-			ingQuan.add(aux);
-		}
+		List<Ingredient> ingredients = recipe.getIngredients();
 
-		if(ingQuan.size() == 0){
+		if(ingredients.size() == 0){
 			return Response.status(422).entity("{}").build();
 		}
 		
-		GenericEntity<List<IngreQuantity>> entity = new GenericEntity<List<IngreQuantity>>(ingQuan) {};
+		GenericEntity<List<Ingredient>> entity = new GenericEntity<List<Ingredient>>(ingredients) {};
 
 		return Response.status(200).entity(entity).build();
 	}
 
 	@GET
+	@Path("step/ingredients")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getIngStep(@QueryParam("id") PkStep id, @HeaderParam("Authorization") String name) {
+	public Response getIngStep(@QueryParam("id") long id, @HeaderParam("Authorization") String name) {
 		StepDAO dao = new StepDAO();
 		Step step = dao.getStep(id);
 		UserDAO udao = new UserDAO();
@@ -64,20 +59,13 @@ public class IngredientsJSON {
 		if(user == null)
 			return Response.status(401).entity("{}").build();
 
-		List<IngreStep> ingredients = step.getIngreSteps();
-		List<IngreQuantity> ingQuan = new ArrayList();
-		for(IngreStep i : ingredients){
-			IngreQuantity aux= new IngreQuantity();
-			aux.setIngreName(i.getIngreStep().getIngredient().getName());
-			aux.setIngreQuant(i.getQuantity());
-			ingQuan.add(aux);
-		}
+		List<Ingredient> ingredients = step.getIngredients();
 
-		if(ingQuan.size() == 0){
+		if(ingredients.size() == 0){
 			return Response.status(422).entity("{}").build();
 		}
 		
-		GenericEntity<List<IngreQuantity>> entity = new GenericEntity<List<IngreQuantity>>(ingQuan) {};
+		GenericEntity<List<Ingredient>> entity = new GenericEntity<List<Ingredient>>(ingredients) {};
 
 		return Response.status(200).entity(entity).build();
 	}

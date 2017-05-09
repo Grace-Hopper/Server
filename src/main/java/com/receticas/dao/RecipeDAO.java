@@ -45,11 +45,12 @@ public class RecipeDAO {
         return recipesList;
     }
 
-    public List<Step> getStepsRecipe (long id){
+    public List<Step> getStepsRecipe (Recipe rp){
         Session session = SessionUtil.getSession();
-        String hql="Select * From steps Where recipe = :id Order by step";
+        String hql = "Select * From steps Where recipe = :id Order by step";
         Query query = session.createQuery(hql);
-        List<Step> orderStepList= query.list();
+        query.setParameter("id",rp.getId());
+        List<Step> orderStepList = query.list();
         session.close();
 
         return orderStepList;

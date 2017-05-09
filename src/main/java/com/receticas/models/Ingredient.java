@@ -15,8 +15,11 @@ public class Ingredient implements Serializable {
     @Column(name = "name")
     private String name;
 
+     @Column(name = "quantity")
+    private long quantity;
+
     @OneToMany(cascade=CascadeType.ALL)    
-    private List<IngreRecipe> recipes = new ArrayList();
+    private List<Recipe> recipes = new ArrayList();
 
     public long getId() {
         return id;
@@ -34,8 +37,20 @@ public class Ingredient implements Serializable {
         this.name = name;
     }
 
-    public List<IngreRecipe> getRecipes() {
+    public long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(long quantity) {
+        this.quantity = quantity;
+    }
+
+    public List<Recipe> getRecipes() {
         return recipes;
+    }
+
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
     }
 
 }

@@ -20,6 +20,7 @@ public class IngredientDAO {
     private void addIngredient(Session session, Ingredient bean){
         Ingredient ingredient = new Ingredient();
         ingredient.setName(bean.getName());
+        ingredient.setQuantity(bean.getQuantity());
 
         session.save(ingredient);
     }
@@ -53,10 +54,11 @@ public class IngredientDAO {
 
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
-        String hql = "UPDATE ingredients SET name = :name WHERE id = :id";
+        String hql = "UPDATE ingredients SET name = :name, set quantity = :quantity WHERE id = :id";
         Query query = session.createQuery(hql);
         query.setParameter("id",id);
         query.setParameter("name",ig.getName());
+        query.setParameter("quantity",ig.getQuantity());
         int rowCount = query.executeUpdate();
         System.out.println("Rows affected: " + rowCount);
         tx.commit();
