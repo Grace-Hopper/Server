@@ -45,10 +45,10 @@ public class Recipe implements Serializable {
     inverseJoinColumns={@JoinColumn(name = "utensil", referencedColumnName = "id")})
 	private List<Utensil> utensils = new ArrayList();
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    /*@ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name="use_2", joinColumns={@JoinColumn(name = "recipe", referencedColumnName = "id")},
     inverseJoinColumns={@JoinColumn(name = "ingredient", referencedColumnName = "id")})    
-    private List<Ingredient> ingredients = new ArrayList();
+    private List<Ingredient> ingredients = new ArrayList();*/
 
     @OneToMany(cascade=CascadeType.ALL)    
     private List<Step> steps = new ArrayList();
@@ -117,13 +117,13 @@ public class Recipe implements Serializable {
     	this.utensils = utensils;
     }
 
-    public List<Ingredient> getIngredients() {
+    /*public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
     public void setIngredients(List<Ingredient> ingredients){
     	this.ingredients = ingredients;
-    }
+    }*/
 
     public List<Step> getSteps() {
         return steps;
