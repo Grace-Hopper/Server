@@ -20,7 +20,7 @@ public class StepDAO{
 	private void addStep(Session session, Step bean){
         Step step = new Step();
         step.setStep(bean.getStep());
-        step.setRecipe(bean.getRecipe());
+//        step.setRecipe(bean.getRecipe());
         step.setTime(bean.getTime());
         step.setInformation(bean.getInformation());
 
@@ -48,6 +48,17 @@ public class StepDAO{
     	return step;
     }
 
+    public List<Step> getStepsRecipe (Recipe rp){
+        Session session = SessionUtil.getSession();
+        String hql = "From steps Where recipe = :id Order by step";
+        Query query = session.createQuery(hql);
+        query.setParameter("id", rp.getId());
+        List<Step> orderStepList = query.list();
+        session.close();
+
+        return orderStepList;
+    }
+
     public int deleteStep(long id){
     	Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
@@ -69,7 +80,7 @@ public class StepDAO{
         String hql = "UPDATE steps SET recipe = :recipe, time = :time, information = :information WHERE step = :id";
         Query query = session.createQuery(hql);
         query.setParameter("id",id);
-    	query.setParameter("recipe",step.getRecipe());
+//    	query.setParameter("recipe",step.getRecipe());
         query.setParameter("name",step.getStep());
         query.setParameter("time",step.getTime());
         query.setParameter("information",step.getInformation());

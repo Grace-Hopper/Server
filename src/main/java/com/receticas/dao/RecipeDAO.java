@@ -45,17 +45,6 @@ public class RecipeDAO {
         return recipesList;
     }
 
-    public List<Step> getStepsRecipe (Recipe rp){
-        Session session = SessionUtil.getSession();
-        String hql = "Select * From steps Where recipe = :id Order by step";
-        Query query = session.createQuery(hql);
-        query.setParameter("id",rp.getId());
-        List<Step> orderStepList = query.list();
-        session.close();
-
-        return orderStepList;
-    }
-
     public Recipe getRecipe(long id){
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
@@ -65,9 +54,9 @@ public class RecipeDAO {
 
         return recipe;
     }
-    public List<Recipe> getDestacados(){
+    public List<Recipe> getOutstanding(){
         Session session = SessionUtil.getSession();
-        String hql = "FROM recipes where outstanding = 1";
+        String hql = "FROM recipes where outstanding <> 0";
         Query query = session.createQuery(hql);
         List<Recipe> recipesList = query.list();
         session.close();

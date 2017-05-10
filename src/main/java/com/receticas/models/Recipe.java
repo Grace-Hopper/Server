@@ -40,18 +40,18 @@ public class Recipe implements Serializable {
     @JoinColumn(name = "user")
     private User user;
 
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(name="use_1", joinColumns={@JoinColumn(name = "recipe", referencedColumnName = "id")},
-    inverseJoinColumns={@JoinColumn(name = "utensil", referencedColumnName = "id")})
-	private List<Utensil> utensils = new ArrayList();
-
-    /*@ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(name="use_2", joinColumns={@JoinColumn(name = "recipe", referencedColumnName = "id")},
-    inverseJoinColumns={@JoinColumn(name = "ingredient", referencedColumnName = "id")})    
-    private List<Ingredient> ingredients = new ArrayList();*/
-
-    @OneToMany(cascade=CascadeType.ALL)    
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "recipe")
     private List<Step> steps = new ArrayList();
+
+    //@ManyToMany(cascade=CascadeType.ALL)
+    //@JoinTable(name="use_1", joinColumns={@JoinColumn(name = "recipe", referencedColumnName = "id")},
+    //inverseJoinColumns={@JoinColumn(name = "utensil", referencedColumnName = "id")})
+		//private List<Utensil> utensils = new ArrayList();
+
+    //@ManyToMany(cascade=CascadeType.ALL)
+    //@JoinTable(name="use_2", joinColumns={@JoinColumn(name = "recipe", referencedColumnName = "id")},
+    //inverseJoinColumns={@JoinColumn(name = "ingredient", referencedColumnName = "id")})    
+    //private List<Ingredient> ingredients = new ArrayList();
 
     public long getId() {
         return id;
@@ -109,27 +109,27 @@ public class Recipe implements Serializable {
         this.user = user;
     }
 
-    public List<Utensil> getUtensils() {
-    	return utensils;
-    }
+    //public List<Utensil> getUtensils() {
+      //return utensils;
+    //}
 
-    public void setUtensils(List<Utensil> utensils){
-    	this.utensils = utensils;
-    }
+    //public void setUtensils(List<Utensil> utensils){
+      //this.utensils = utensils;
+    //}
 
-    /*public List<Ingredient> getIngredients() {
-        return ingredients;
-    }
+    //public List<Ingredient> getIngredients() {
+        //return ingredients;
+    //}
 
-    public void setIngredients(List<Ingredient> ingredients){
-    	this.ingredients = ingredients;
-    }*/
+    //public void setIngredients(List<Ingredient> ingredients){
+      //this.ingredients = ingredients;
+    //}
 
     public List<Step> getSteps() {
         return steps;
     }
 
     public void setSteps(List<Step> steps){
-    	this.steps = steps;
+      this.steps = steps;
     }
 }
