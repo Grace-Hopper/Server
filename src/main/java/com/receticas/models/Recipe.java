@@ -132,7 +132,7 @@ public class Recipe implements Serializable {
         return utensils;
     }
 
-    public void setIngredients(List<Use_1> ingredients){
+    public void setUtensils(List<Use_1> utensils){
         this.utensils = utensils;
     }
 
