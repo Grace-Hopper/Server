@@ -1,5 +1,9 @@
 package com.receticas.models;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.IndexColumn;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
@@ -40,20 +44,13 @@ public class Recipe implements Serializable {
     @JoinColumn(name = "user")
     private User user;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "recipe")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "recipe")
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Ingredient> ingredients = new ArrayList();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "recipe")
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Step> steps = new ArrayList();
-
-    //@ManyToMany(cascade=CascadeType.ALL)
-    //@JoinTable(name="use_1", joinColumns={@JoinColumn(name = "recipe")},
-    //inverseJoinColumns={@JoinColumn(name = "utensil")})
-	//private List<Utensil> utensils = new ArrayList();
-
-    //@ManyToMany(cascade=CascadeType.ALL)
-    //@JoinTable(name="use_2", joinColumns={@JoinColumn(name = "recipe", referencedColumnName = "id")},
-    //inverseJoinColumns={@JoinColumn(name = "ingredient", referencedColumnName = "id")})    
-    //private List<Ingredient> ingredients = new ArrayList();
-
-    private List<Use_1> utensils = new ArrayList();
 
     public long getId() {
         return id;
@@ -111,36 +108,19 @@ public class Recipe implements Serializable {
         this.user = user;
     }
 
-    //public List<Utensil> getUtensils() {
-    //return utensils;
-    //}
-
-    //public void setUtensils(List<Utensil> utensils){
-    //this.utensils = utensils;
-    //}
-
-    //public List<Ingredient> getIngredients() {
-        //return ingredients;
-    //}
-
-    //public void setIngredients(List<Ingredient> ingredients){
-      //this.ingredients = ingredients;
-    //}
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.recipe", cascade=CascadeType.ALL)
-    public List<Use_1> getUtensils() {
-        return utensils;
-    }
-
-    public void setUtensils(List<Use_1> utensils){
-        this.utensils = utensils;
-    }
-
     public List<Step> getSteps() {
         return steps;
     }
 
     public void setSteps(List<Step> steps){
       this.steps = steps;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }

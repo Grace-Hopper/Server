@@ -173,7 +173,7 @@ INSERT INTO `users` (`id`, `name`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `use_1`
+-- Estructura de tabla para la tabla `Use_1`
 --
 
 CREATE TABLE IF NOT EXISTS `use_1` (
@@ -184,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `use_1` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `use_1`
+-- Volcado de datos para la tabla `Use_1`
 --
 
 INSERT INTO `use_1` (`recipe`, `utensil`) VALUES
@@ -196,7 +196,7 @@ INSERT INTO `use_1` (`recipe`, `utensil`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `use_2`
+-- Estructura de tabla para la tabla `Use_2`
 --
 
 CREATE TABLE IF NOT EXISTS `use_2` (
@@ -210,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `use_2` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `use_3`
+-- Estructura de tabla para la tabla `Use_3`
 --
 
 CREATE TABLE IF NOT EXISTS `use_3` (
@@ -226,7 +226,7 @@ CREATE TABLE IF NOT EXISTS `use_3` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `use_4`
+-- Estructura de tabla para la tabla `Use_4`
 --
 
 CREATE TABLE IF NOT EXISTS `use_4` (

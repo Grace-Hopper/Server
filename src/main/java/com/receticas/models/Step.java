@@ -1,6 +1,7 @@
 package com.receticas.models;
 
-import org.eclipse.persistence.annotations.PrimaryKey;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +11,9 @@ import java.util.*;
 @Table(name = "steps")
 public class Step implements Serializable {
     @Id
+    @Column(name = "id")
+    private long id;
+
     @Column(name = "step")
     private long step;
 
@@ -19,37 +23,28 @@ public class Step implements Serializable {
     @Column(name = "information")
     private String information;
 
-    @Id
     @Column(name = "recipe")
     private long recipe;
 
-    //@ManyToMany(cascade=CascadeType.ALL)
-    //@JoinTable(name = "use_4",
-           //joinColumns = {@JoinColumn(table = "steps",
-                                      //name = "step", 
-                                      //referencedColumnName = "step"),
-                          //@JoinColumn(table = "steps",
-                                      //name = "recipe",                               
-                                      //referencedColumnName = "recipe", 
-                                      //nullable = true)},
-           //inverseJoinColumns = @JoinColumn(table = "utensils",
-                                            //name = "utensil",
-                                            //referencedColumnName = "id"))
-    //private List<Utensil> utensils = new ArrayList();
+    @Fetch(value = FetchMode.SUBSELECT)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "step")
+    private List<Ingredient> ingredients = new ArrayList();
 
-    //@ManyToMany(cascade=CascadeType.ALL)
-    //@JoinTable(name = "use_3",
-           //joinColumns = {@JoinColumn(table = "steps",
-                                      //name = "step", 
-                                      //referencedColumnName = "step"),
-                          //@JoinColumn(table = "steps",
-                                      //name = "recipe",                               
-                                      //referencedColumnName = "recipe", 
-                                      //nullable = true)},
-           //inverseJoinColumns = @JoinColumn(table = "ingredients",
-                                            //name = "ingredient",
-                                            //referencedColumnName = "id"))    
-    //private List<Ingredient> ingredients = new ArrayList();
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
 
     public long getStep() {
         return step;
@@ -82,22 +77,6 @@ public class Step implements Serializable {
     public void setInformation(String information) {
         this.information = information;
     }
-
-    //public List<Utensil> getUtensils() {
-        //return utensils;
-    //}
-
-    //public void setUtensils(List<Utensil> utensils){
-      //this.utensils = utensils;
-    //}
-
-    //public List<Ingredient> getIngredients() {
-        //return ingredients;
-    //}
-
-    //public void setIngredients(List<Ingredient> ingredients){
-      //this.ingredients = ingredients;
-    //}
 
     @Override
     public boolean equals(Object o) {

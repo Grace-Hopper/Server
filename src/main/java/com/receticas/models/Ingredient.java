@@ -18,10 +18,27 @@ public class Ingredient implements Serializable {
     @Column(name = "quantity")
     private String quantity;
 
-    /*@ManyToMany(cascade=CascadeType.ALL)    
-    @JoinTable(name="use_2", joinColumns={@JoinColumn(name = "ingredient", referencedColumnName = "id")},
-    inverseJoinColumns={@JoinColumn(name = "recipe", referencedColumnName = "id")}) 
-    private List<Recipe> recipes = new ArrayList();*/
+    @Column(name = "recipe")
+    private long recipe;
+
+    @Column(name = "step")
+    private long step;
+
+    public long getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(long recipe) {
+        this.recipe = recipe;
+    }
+
+    public long getStep() {
+        return step;
+    }
+
+    public void setStep(long step) {
+        this.step = step;
+    }
 
     public long getId() {
         return id;
@@ -46,13 +63,4 @@ public class Ingredient implements Serializable {
     public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
-
-  /*  public List<Recipe> getRecipes() {
-        return recipes;
-    }
-
-    public void setRecipes(List<Recipe> recipes) {
-        this.recipes = recipes;
-    }*/
-
 }

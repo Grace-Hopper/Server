@@ -16,9 +16,11 @@
         <property name="hibernate.format_sql">true</property>
 				
         <mapping class="com.receticas.models.User"/>
+        <mapping class="com.receticas.models.Ingredient"/>
 		<mapping class="com.receticas.models.Recipe"/>
         <mapping class="com.receticas.models.Step"/>
         <mapping class="com.receticas.models.Utensil"/>
-        <mapping class="com.receticas.models.Ingredient"/>
+        <mapping class="com.receticas.models.Use_2"/>
+        <mapping class="com.receticas.models.Use_3"/>
     </session-factory>
 </hibernate-configuration>

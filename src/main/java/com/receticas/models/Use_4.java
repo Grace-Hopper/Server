@@ -1,8 +1,6 @@
 package com.receticas.models;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.*;
 
 @Entity
 @Table(name="use_4")
@@ -16,7 +14,7 @@ import java.util.*;
 
 })
 
-public class use_4 implements java.io.Serializable{
+public class Use_4 implements java.io.Serializable{
 	
 	@Embeddable
 	public class use_4_id implements java.io.Serializable {
@@ -98,7 +96,7 @@ public class use_4 implements java.io.Serializable{
 		if (o == null || getClass() != o.getClass())
 			return false;
 
-		use_2 that = (use_2) o;
+		Use_2 that = (Use_2) o;
 
 		if (getPk() != null ? !getPk().equals(that.getPk())
 				: that.getPk() != null)
