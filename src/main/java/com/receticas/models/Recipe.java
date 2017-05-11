@@ -44,14 +44,16 @@ public class Recipe implements Serializable {
     private List<Step> steps = new ArrayList();
 
     //@ManyToMany(cascade=CascadeType.ALL)
-    //@JoinTable(name="use_1", joinColumns={@JoinColumn(name = "recipe", referencedColumnName = "id")},
-    //inverseJoinColumns={@JoinColumn(name = "utensil", referencedColumnName = "id")})
-		//private List<Utensil> utensils = new ArrayList();
+    //@JoinTable(name="use_1", joinColumns={@JoinColumn(name = "recipe")},
+    //inverseJoinColumns={@JoinColumn(name = "utensil")})
+	//private List<Utensil> utensils = new ArrayList();
 
     //@ManyToMany(cascade=CascadeType.ALL)
     //@JoinTable(name="use_2", joinColumns={@JoinColumn(name = "recipe", referencedColumnName = "id")},
     //inverseJoinColumns={@JoinColumn(name = "ingredient", referencedColumnName = "id")})    
     //private List<Ingredient> ingredients = new ArrayList();
+
+    private List<Use_1> ingredients = new ArrayList();
 
     public long getId() {
         return id;
@@ -110,11 +112,11 @@ public class Recipe implements Serializable {
     }
 
     //public List<Utensil> getUtensils() {
-      //return utensils;
+    //return utensils;
     //}
 
     //public void setUtensils(List<Utensil> utensils){
-      //this.utensils = utensils;
+    //this.utensils = utensils;
     //}
 
     //public List<Ingredient> getIngredients() {
@@ -124,6 +126,15 @@ public class Recipe implements Serializable {
     //public void setIngredients(List<Ingredient> ingredients){
       //this.ingredients = ingredients;
     //}
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.recipe", cascade=CascadeType.ALL)
+    public List<Use_1> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Use_1> ingredients){
+        this.ingredients = ingredients;
+    }
 
     public List<Step> getSteps() {
         return steps;
