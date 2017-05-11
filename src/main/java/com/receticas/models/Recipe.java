@@ -53,7 +53,7 @@ public class Recipe implements Serializable {
     //inverseJoinColumns={@JoinColumn(name = "ingredient", referencedColumnName = "id")})    
     //private List<Ingredient> ingredients = new ArrayList();
 
-    private List<Use_1> ingredients = new ArrayList();
+    private List<Use_1> utensils = new ArrayList();
 
     public long getId() {
         return id;
@@ -128,12 +128,12 @@ public class Recipe implements Serializable {
     //}
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.recipe", cascade=CascadeType.ALL)
-    public List<Use_1> getIngredients() {
-        return ingredients;
+    public List<Use_1> getUtensils() {
+        return utensils;
     }
 
     public void setIngredients(List<Use_1> ingredients){
-        this.ingredients = ingredients;
+        this.utensils = utensils;
     }
 
     public List<Step> getSteps() {
