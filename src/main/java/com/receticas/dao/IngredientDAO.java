@@ -57,11 +57,13 @@ public class IngredientDAO {
 
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
-        String hql = "UPDATE ingredients SET name = :name, set quantity = :quantity WHERE id = :id";
+        String hql = "UPDATE ingredients SET name = :name, quantity = :quantity, recipe = :recipe, step = :step WHERE id = :id";
         Query query = session.createQuery(hql);
         query.setParameter("id",id);
         query.setParameter("name",ig.getName());
         query.setParameter("quantity",ig.getQuantity());
+        query.setParameter("step",ig.getStep());
+        query.setParameter("recipe",ig.getRecipe());
         int rowCount = query.executeUpdate();
         System.out.println("Rows affected: " + rowCount);
         tx.commit();

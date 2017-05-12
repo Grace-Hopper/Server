@@ -18,7 +18,7 @@ public class Step implements Serializable {
     @Column(name = "step")
     private long step;
 
-    @Column(name = "time")
+    @Column(name = "total_time")
     private long timer;
 
     @Column(name = "information")
@@ -63,11 +63,11 @@ public class Step implements Serializable {
         this.recipe = recipe;
     }
 
-    public long getTime() {
+    public long getTimer() {
         return timer;
     }
 
-    public void setTime(long timer) {
+    public void setTimer(long timer) {
         this.timer = timer;
     }
 

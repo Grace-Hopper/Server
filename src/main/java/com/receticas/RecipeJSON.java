@@ -52,10 +52,33 @@ public class RecipeJSON {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response upgradeRecipe(Recipe rp) {
         RecipeDAO dao = new RecipeDAO();
+        StepDAO sdao = new StepDAO();
+        IngredientDAO idao = new IngredientDAO();
         Recipe exist = dao.getRecipe(rp.getId());
 
         if(exist != null) {
             dao.updateRecipe(rp.getId(), rp);
+
+            for (Ingredient in : rp.getIngredients()){
+                Ingredient iexist = idao.getIngredient(in.getId());
+                if(iexist != null) {
+                    idao.updateIngredient(in.getId(), in);
+                }
+            }
+
+            for (Step st : rp.getSteps()){
+                Step sexist = sdao.getStep(st.getId());
+                if(sexist != null) {
+                    sdao.updateStep(st.getId(), st);
+                }
+
+                for (Ingredient in : st.getIngredients()){
+                    Ingredient iexist = idao.getIngredient(in.getId());
+                    if(iexist != null) {
+                        idao.updateIngredient(in.getId(), in);
+                    }
+                }
+            }
             return Response.status(200).entity(rp).build();
         }
 

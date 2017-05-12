@@ -21,7 +21,7 @@ public class StepDAO{
         Step step = new Step();
         step.setStep(bean.getStep());
         step.setRecipe(bean.getRecipe());
-        step.setTime(bean.getTime());
+        step.setTimer(bean.getTimer());
         step.setInformation(bean.getInformation());
 
         session.save(step);
@@ -50,7 +50,7 @@ public class StepDAO{
 
     public List<Step> getStepsRecipe (Recipe rp){
         Session session = SessionUtil.getSession();
-        String hql = "From steps Where recipe = :id Order by step";
+        String hql = "From steps Where id = :id Order by step";
         Query query = session.createQuery(hql);
         query.setParameter("id", rp.getId());
         List<Step> orderStepList = query.list();
@@ -62,7 +62,7 @@ public class StepDAO{
     public int deleteStep(long id){
     	Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
-        String hql = "DELETE FROM steps WHERE step = :id";
+        String hql = "DELETE FROM steps WHERE id = :id";
         Query query = session.createQuery(hql);
     	query.setParameter("id",id);
         int rowCount = query.executeUpdate();
@@ -77,13 +77,13 @@ public class StepDAO{
     	if(id <=0) return 0;
     	Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
-        String hql = "UPDATE steps SET recipe = :recipe, time = :time, information = :information WHERE step = :id";
+        String hql = "UPDATE steps SET step = :step, recipe = :recipe, total_time = :time, information = :information WHERE id = :id";
         Query query = session.createQuery(hql);
         query.setParameter("id",id);
-    	query.setParameter("recipe",step.getRecipe());
-        query.setParameter("name",step.getStep());
-        query.setParameter("time",step.getTime());
         query.setParameter("information",step.getInformation());
+    	query.setParameter("recipe",step.getRecipe());
+        query.setParameter("step",step.getStep());
+        query.setParameter("time",step.getTimer());
         int rowCount = query.executeUpdate();
         System.out.println("Rows affected: " + rowCount);
         tx.commit();
