@@ -15,6 +15,27 @@ public class Utensil implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "recipe")
+    private long recipe;
+
+    @Column(name = "step")
+    private long step;
+
+    public long getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(long recipe) {
+        this.recipe = recipe;
+    }
+
+    public long getStep() {
+        return step;
+    }
+
+    public void setStep(long step) {
+        this.step = step;
+    }
     public long getId() {
         return id;
     }

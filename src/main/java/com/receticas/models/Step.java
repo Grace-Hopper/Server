@@ -31,6 +31,17 @@ public class Step implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "step")
     private List<Ingredient> ingredients = new ArrayList();
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "step")
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Utensil> utensils = new ArrayList();
+
+    public List<Utensil> getUtensils() {
+        return utensils;
+    }
+
+    public void setUtensils(List<Utensil> utensils) {
+        this.utensils = utensils;
+    }
     public long getId() {
         return id;
     }

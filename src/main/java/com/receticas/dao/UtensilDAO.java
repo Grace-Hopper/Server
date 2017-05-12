@@ -20,8 +20,11 @@ public class UtensilDAO {
     private void addUtensil(Session session, Utensil bean){
         Utensil utensil = new Utensil();
         utensil.setName(bean.getName());
+        utensil.setRecipe(bean.getRecipe());
+        utensil.setStep(bean.getStep());
 
         session.save(utensil);
+        bean.setId(utensil.getId());
     }
 
     public Utensil getUtensil(long id){
@@ -53,10 +56,12 @@ public class UtensilDAO {
 
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
-        String hql = "UPDATE utensils SET name = :name WHERE id = :id";
+        String hql = "UPDATE utensils SET name = :name, recipe = :recipe, step = :step WHERE id = :id";
         Query query = session.createQuery(hql);
         query.setParameter("id",id);
         query.setParameter("name",ut.getName());
+        query.setParameter("step",ut.getStep());
+        query.setParameter("recipe",ut.getRecipe());
         int rowCount = query.executeUpdate();
         System.out.println("Rows affected: " + rowCount);
         tx.commit();

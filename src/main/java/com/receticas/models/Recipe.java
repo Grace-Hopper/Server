@@ -53,6 +53,18 @@ public class Recipe implements Serializable {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Step> steps = new ArrayList();
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "recipe")
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Utensil> utensils = new ArrayList();
+
+    public List<Utensil> getUtensils() {
+        return utensils;
+    }
+
+    public void setUtensils(List<Utensil> utensils) {
+        this.utensils = utensils;
+    }
+
     public long getId() {
         return id;
     }

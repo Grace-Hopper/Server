@@ -1,13 +1,7 @@
 package com.receticas;
 
-import com.receticas.dao.IngredientDAO;
-import com.receticas.dao.StepDAO;
-import com.receticas.dao.UserDAO;
-import com.receticas.models.Ingredient;
-import com.receticas.models.Recipe;
-import com.receticas.dao.RecipeDAO;
-import com.receticas.models.Step;
-import com.receticas.models.User;
+import com.receticas.dao.*;
+import com.receticas.models.*;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -54,6 +48,7 @@ public class RecipeJSON {
         RecipeDAO dao = new RecipeDAO();
         StepDAO sdao = new StepDAO();
         IngredientDAO idao = new IngredientDAO();
+        UtensilDAO udao = new UtensilDAO();
         Recipe exist = dao.getRecipe(rp.getId());
 
         if(exist != null) {
@@ -63,6 +58,12 @@ public class RecipeJSON {
                 Ingredient iexist = idao.getIngredient(in.getId());
                 if(iexist != null) {
                     idao.updateIngredient(in.getId(), in);
+                }
+            }
+            for (Utensil in : rp.getUtensils()){
+                Utensil iexist = udao.getUtensil(in.getId());
+                if(iexist != null) {
+                    udao.updateUtensil(in.getId(), in);
                 }
             }
 
@@ -76,6 +77,12 @@ public class RecipeJSON {
                     Ingredient iexist = idao.getIngredient(in.getId());
                     if(iexist != null) {
                         idao.updateIngredient(in.getId(), in);
+                    }
+                }
+                for (Utensil in : st.getUtensils()){
+                    Utensil iexist = udao.getUtensil(in.getId());
+                    if(iexist != null) {
+                        udao.updateUtensil(in.getId(), in);
                     }
                 }
             }
@@ -97,6 +104,7 @@ public class RecipeJSON {
         RecipeDAO dao = new RecipeDAO();
         StepDAO sdao = new StepDAO();
         IngredientDAO idao = new IngredientDAO();
+        UtensilDAO udao = new UtensilDAO();
 
         dao.addRecipe(rp);
         long rid = rp.getId();
@@ -105,6 +113,11 @@ public class RecipeJSON {
             in.setRecipe(rid);
             in.setStep(-1);
             idao.addIngredient(in);
+        }
+        for (Utensil in : rp.getUtensils()){
+            in.setRecipe(rid);
+            in.setStep(-1);
+            udao.addUtensil(in);
         }
 
         for (Step st : rp.getSteps()){
@@ -116,6 +129,11 @@ public class RecipeJSON {
                 in.setStep(sid);
                 in.setRecipe(-1);
                 idao.addIngredient(in);
+            }
+            for (Utensil in : st.getUtensils()){
+                in.setStep(sid);
+                in.setRecipe(-1);
+                udao.addUtensil(in);
             }
         }
         return Response.status(200).entity(rp).build();
