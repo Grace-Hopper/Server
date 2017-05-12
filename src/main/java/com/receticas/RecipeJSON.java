@@ -1,8 +1,12 @@
 package com.receticas;
 
+import com.receticas.dao.IngredientDAO;
+import com.receticas.dao.StepDAO;
 import com.receticas.dao.UserDAO;
+import com.receticas.models.Ingredient;
 import com.receticas.models.Recipe;
 import com.receticas.dao.RecipeDAO;
+import com.receticas.models.Step;
 import com.receticas.models.User;
 
 import javax.ws.rs.*;
@@ -68,8 +72,29 @@ public class RecipeJSON {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response storeRecipe(Recipe rp) {
         RecipeDAO dao = new RecipeDAO();
+        StepDAO sdao = new StepDAO();
+        IngredientDAO idao = new IngredientDAO();
 
         dao.addRecipe(rp);
+        long rid = rp.getId();
+
+        for (Ingredient in : rp.getIngredients()){
+            in.setRecipe(rid);
+            in.setStep(-1);
+            idao.addIngredient(in);
+        }
+
+        for (Step st : rp.getSteps()){
+            st.setRecipe(rid);
+            sdao.addStep(st);
+            long sid = st.getId();
+
+            for (Ingredient in : st.getIngredients()){
+                in.setStep(sid);
+                in.setRecipe(-1);
+                idao.addIngredient(in);
+            }
+        }
         return Response.status(200).entity(rp).build();
     }
 }

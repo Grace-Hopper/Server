@@ -21,8 +21,11 @@ public class IngredientDAO {
         Ingredient ingredient = new Ingredient();
         ingredient.setName(bean.getName());
         ingredient.setQuantity(bean.getQuantity());
+        ingredient.setRecipe(bean.getRecipe());
+        ingredient.setStep(bean.getStep());
 
         session.save(ingredient);
+        bean.setId(ingredient.getId());
     }
 
     public Ingredient getIngredient(long id){

@@ -38,6 +38,7 @@ public class Recipe implements Serializable {
     private int outstanding;
 
     @Column(columnDefinition = "LONGBLOB", name = "picture")
+    @Lob
     private byte[] picture;
 
     @ManyToOne

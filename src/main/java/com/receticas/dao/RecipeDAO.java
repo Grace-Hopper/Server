@@ -31,8 +31,12 @@ public class RecipeDAO {
         recipe.setName(bean.getName());
         recipe.setTotal_time(bean.getTotal_time());
         recipe.setUser(bean.getUser());
+        recipe.setPerson(bean.getPerson());
+        recipe.setOutstanding(bean.getOutstanding());
+        recipe.setPicture(bean.getPicture());
 
         session.save(recipe);
+        bean.setId(recipe.getId());
     }
 
     public List<Recipe> getRecipes(){

@@ -12,6 +12,7 @@ import java.util.*;
 public class Step implements Serializable {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "step")

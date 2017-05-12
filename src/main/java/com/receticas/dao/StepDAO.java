@@ -20,12 +20,12 @@ public class StepDAO{
 	private void addStep(Session session, Step bean){
         Step step = new Step();
         step.setStep(bean.getStep());
-//        step.setRecipe(bean.getRecipe());
+        step.setRecipe(bean.getRecipe());
         step.setTime(bean.getTime());
         step.setInformation(bean.getInformation());
 
-
         session.save(step);
+        bean.setId(step.getId());
     }
 
     public List<Step> getSteps(){
@@ -80,7 +80,7 @@ public class StepDAO{
         String hql = "UPDATE steps SET recipe = :recipe, time = :time, information = :information WHERE step = :id";
         Query query = session.createQuery(hql);
         query.setParameter("id",id);
-//    	query.setParameter("recipe",step.getRecipe());
+    	query.setParameter("recipe",step.getRecipe());
         query.setParameter("name",step.getStep());
         query.setParameter("time",step.getTime());
         query.setParameter("information",step.getInformation());
