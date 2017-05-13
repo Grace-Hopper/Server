@@ -1,6 +1,7 @@
 package com.receticas.dao;
 
 import com.receticas.models.Recipe;
+import com.receticas.models.Ingredient;
 import com.receticas.models.Step;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -66,6 +67,62 @@ public class RecipeDAO {
         session.close();
 
         return recipesList;
+    }
+
+    /*public List<Recipe> getRecipeSearch(List<String> ingredients){
+        Session session= SessionUtil.getSession();
+        String hql = "Select r.id, r.name, r.total_time, r.person, r.user, r.outstanding, r.picture From recipes r, ";
+        int count=0;
+        for(String i : ingredients){
+            hql=hql+"ingredients i"+String.valueOf(count)+", ";
+            count++;
+        }
+        count=0;
+        hql=hql.substring(0,hql.length()-2);
+        hql=hql+" Where ";
+        for(String i : ingredients){
+            hql=hql+"r.id=i"+String.valueOf(count)+".recipe and i"+String.valueOf(count)+".name=\""+i+"\" and ";
+            count++;       
+        }
+
+        hql=hql.substring(0,hql.length()-5);
+        Query query =session.createQuery(hql);
+        List<Recipe>  recipeList = query.list();
+        session.close();
+
+        return recipeList;
+    }*/
+
+    public List<Recipe> getIdRecipeSearch(List<Ingredient> ingredients){
+        Session session= SessionUtil.getSession();
+        String hql = "From recipes r1 Where r1.id IN (Select r.id From recipes r, ";
+        int count=0;
+        for(Ingredient i : ingredients){
+            hql=hql+"ingredients i"+String.valueOf(count)+", ";
+            count++;
+        }
+        count=0;
+        hql=hql.substring(0,hql.length()-2);
+        hql=hql+" Where ";
+        for(Ingredient i : ingredients){
+            hql=hql+"r.id=i"+String.valueOf(count)+".recipe and i"+String.valueOf(count)+".name = :i"+String.valueOf(count)+" and ";
+            count++;       
+        }
+        count=1;
+        hql=hql.substring(0,hql.length()-5);
+        hql=hql+")";
+        Query query =session.createQuery(hql);
+        String setI="i0";
+        for(Ingredient i : ingredients){
+            query.setParameter(setI,i.getName());
+            setI=setI.substring(0,setI.length()-1);
+            setI=setI+String.valueOf(count);
+            count++;
+        }
+        List<Recipe>  recipeList = query.list();
+        session.close();
+
+        return recipeList;
     }
 
     public int deleteRecipe(long id) {
