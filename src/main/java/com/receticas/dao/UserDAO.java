@@ -31,6 +31,7 @@ public class UserDAO {
         user.setPassword(bean.getPassword());
 
         session.save(user);
+        bean.setId(user.getId());
     }
 
     public List<User> getUsers(){

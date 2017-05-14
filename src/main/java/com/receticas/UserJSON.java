@@ -30,6 +30,25 @@ public class UserJSON {
         return Response.status(200).entity(user).build();
     }
     /**
+     * Method handling HTTP PUT requests. The returned object will be sent
+     * to the client as "application/json" media type.
+     *
+     * @return String that will be returned as a application/json response.
+     */
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response upgradeUser(User u) {
+        UserDAO dao = new UserDAO();
+        User user = dao.getUser(u.getName());
+
+        if(user == null) return Response.status(404).entity("{}").build();
+
+        dao.updateUser(user.getId(), u);
+
+        return Response.status(200).entity(user).build();
+    }
+    /**
      * Method handling HTTP POST requests. The returned object will be sent
      * to the client as "application/json" media type.
      *
