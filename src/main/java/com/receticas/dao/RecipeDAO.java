@@ -150,15 +150,18 @@ public class RecipeDAO {
 
     public List<Recipe> getRelaxedSearch(List<Ingredient> ingredients){
         Session session= SessionUtil.getSession();
-        String hql = "Create view id_numId as Select r.id as Ids from recipes r, ingredients i1 where ";
+        String hql = "From recipes r1 where r1.id IN (Select r.id From recipes r, ingredients i Where ";
         int count=0;
         for(Ingredient i : ingredients){
-            hql=hql+"(r.id = i1.recipe and i1.name = :i"+String.valueOf(count)+" ) or ";
+            hql=hql+"(r.id=i.recipe and i.name = :i"+String.valueOf(count)+") or ";
             count++;
         }
-        count=0;
+        count=1;
         hql=hql.substring(0,hql.length()-4);
-        Query query =session.getNamedQuery(hql);
+        hql=hql+")";
+        //hql=hql+"group by r.id order by count(*) desc)";
+
+        Query query =session.createQuery(hql);
         String setI="i0";
         for(Ingredient i : ingredients){
             query.setParameter(setI,i.getName());
@@ -166,32 +169,13 @@ public class RecipeDAO {
             setI=setI+String.valueOf(count);
             count++;
         }
-
-        Session session2=SessionUtil.getSession();
-        String hql2="Create view orderIds as Select id, count(*) as numId from id_numId group by id order by numId desc";
-        Query query2 =session2.createQuery(hql2);
-
-        Session session3=SessionUtil.getSession();
-        String hql3="From recipes r1 where r1.id in (Select o.id from orderIds o)";
-        Query query3 =session3.createQuery(hql3);
-
-        List<Recipe>  recipeList = query3.list();
-
-        Session session4=SessionUtil.getSession();
-        String hql4="drop view id_numId";
-        Query query4 =session4.createQuery(hql4);
-
-        Session session5=SessionUtil.getSession();
-        String hql5="drop view orderIds)";
-        Query query5 =session5.createQuery(hql5);
-
-
+        System.out.println(hql);
+        System.out.println(query.getQueryString());
+        List<Recipe> recipeList = query.list();
 
         session.close();
-        session2.close();
-        session3.close();
-        session4.close();
-        session5.close();
+
+
 
         return recipeList;
     }
