@@ -24,7 +24,9 @@ public class SearchJSON{
 	public Response getSearch(List<Ingredient> ingredients){
 		RecipeDAO dao= new RecipeDAO();
 		List<Recipe> recipes=dao.getIdRecipeSearch(ingredients);
-
+		if(recipes.size()==0){
+			recipes=dao.getRelaxedSearch(ingredients);
+		}
 
 		GenericEntity<List<Recipe>> entity = new GenericEntity<List<Recipe>>(recipes) {};
 		return Response.status(200).entity(entity).build();
