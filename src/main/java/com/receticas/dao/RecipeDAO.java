@@ -12,6 +12,7 @@ import java.util.*;
 
 import java.util.List;
 
+
 /**
  * =====================================================================================
  * Filename: RecipeDAO.java
@@ -22,49 +23,6 @@ import java.util.List;
  */
 
 public class RecipeDAO {
-
-    /*@Entity(name="id_numId")
-    @Table(name="id_numId")
-    public class Id_numId implements Serializable {
-        @Id
-        @Column(name="Ids")
-        private long id;
-
-        public long getId(){
-            return id;
-        }
-
-        public void setId(long id){
-            this.id=id;
-        }
-    }
-
-    @Entity(name="orderIds")
-    @Table(name="orderIds")
-    public class OrderIds implements Serializable {
-        @Id
-        @Column(name="id")
-        private long id;
-
-        public long getId(){
-            return id;
-        }
-
-        public void setId(long id){
-            this.id=id;
-        }
-
-        @Column(name="numId")
-        private long numId;
-
-        public long getnumId(){
-            return numId;
-        }
-
-        public void setnumId(long numId){
-            this.numId=numId;
-        }
-    }*/
 
     public void addRecipe(Recipe bean){
         Session session = SessionUtil.getSession();
@@ -149,8 +107,9 @@ public class RecipeDAO {
     }
 
     public List<Recipe> getRelaxedSearch(List<Ingredient> ingredients){
+
         Session session= SessionUtil.getSession();
-        String hql = "From recipes r1 where r1.id IN (Select r.id From recipes r, ingredients i Where ";
+        String hql = "From recipes r1 where r1.id in (Select r.id from recipes r, ingredients i where ";
         int count=0;
         for(Ingredient i : ingredients){
             hql=hql+"(r.id=i.recipe and i.name = :i"+String.valueOf(count)+") or ";
@@ -158,8 +117,7 @@ public class RecipeDAO {
         }
         count=1;
         hql=hql.substring(0,hql.length()-4);
-        hql=hql+")";
-        //hql=hql+"group by r.id order by count(*) desc)";
+        hql=hql+" group by r.id)";
 
         Query query =session.createQuery(hql);
         String setI="i0";
@@ -172,12 +130,15 @@ public class RecipeDAO {
         System.out.println(hql);
         System.out.println(query.getQueryString());
         List<Recipe> recipeList = query.list();
+        
+
 
         session.close();
 
 
 
         return recipeList;
+            
     }
 
     public int deleteRecipe(long id) {
